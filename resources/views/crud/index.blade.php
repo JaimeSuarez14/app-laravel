@@ -6,7 +6,7 @@
   <title>Crud</title>
 </head>
 <body>
-  <h1>Crud</h1>
+  <h1 class="text-green-400">Crud</h1>
   <h2>{{ $name}}</h2>
   <h2>{{$age}}</h2>
 </body>
