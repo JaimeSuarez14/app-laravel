@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FirstController;
+use App\Http\Controllers\Dashboard\PostController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,4 +30,4 @@ Route::get('/contact2', function() {
 })->name('contact2');
 
 Route::get('contact', [FirstController::class, 'index'])->name('contact');
-Route::resource('post', FirstController::class);
+Route::resource('post', PostController::class);
