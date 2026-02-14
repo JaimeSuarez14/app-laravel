@@ -29,3 +29,4 @@ Route::get('/contact2', function() {
 })->name('contact2');
 
 Route::get('contact', [FirstController::class, 'index'])->name('contact');
+Route::resource('post', FirstController::class);
