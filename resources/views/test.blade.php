@@ -8,5 +8,6 @@
 </head>
 <body>
   <h1>Archivo de prueba</h1>
+  <a href={{ route('crud') }} >CRUD</a>
 </body>
 </html>
