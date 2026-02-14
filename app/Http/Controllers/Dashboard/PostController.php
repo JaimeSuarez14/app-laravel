@@ -14,7 +14,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return  view("Post", compact('posts'));
+        return  view("post.index", compact('posts'));
     }
 
     /**
@@ -22,12 +22,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
-         Post::create([
-            'title'=> "Los camellos 2",
-            "content" => "Pelicula de terror 2",
-            "description" => "Trata sobre la vida de un camello 2",
-        ]);
+       return view('post.create');
     }
 
     /**
@@ -35,7 +30,28 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge([
+            'title' => trim($request->title),
+            'content' => trim($request->content),
+            'description' => trim($request->description),
+        ]);
+
+        $request->validate([
+            'title'=> 'required|string|max:30',
+            'content'=> 'required|string|max:30',
+            'description'=> 'required|string|max:255',
+        ]);
+         //
+        $post = new Post;
+
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->description = $request->description;
+
+        $post->save();
+
+        return redirect()->route('post.create')->with('success', 'Post creado correctamente');
+
     }
 
     /**
@@ -43,15 +59,18 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        $id = $post->id;
+        $postOne = Post::find($id);
+        return view("post.show", compact('postOne'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Post $post)
     {
-        //
+        $id = $post->id;
+        $postOne = Post::find($id);
+        return view("post.edit", compact('postOne'));
     }
 
     /**
@@ -59,7 +78,14 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title'=> 'required|string|max:30',
+            'content'=> 'required|string|max:30',
+            'description'=> 'required|string|max:255',
+        ]);
+        $post->update($request->all());
+
+        return redirect()->route('post.edit', $post )->with('success', 'Post actualizado correctamente');
     }
 
     /**
@@ -67,6 +93,6 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        //eliminar le post
     }
 }

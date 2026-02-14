@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Posts</title>
 </head>
-<body>
-    <main style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center">
-    <div style="padding: 10px; background-color: rgb(239, 228, 228)">
-    <h1>Lista de Posts Registrados</h1>
-    <table border="1">
+<body style="box-sizing: border-box; padding:0; margin:0">
+    <main style="height: 100vh; background-color: rgb(4, 4, 57); display: flex; flex-direction: column; justify-content: center; align-items: center; color:white;">
+    <div style="padding: 25px; background-color: rgb(0, 0, 0); border-radius: 10px">
+    <h1 style="">Lista de Posts Registrados</h1>
+    <div style="padding-bottom: 15px;">
+        <span>Crear un nuevo Post </span> <a href={{ route('post.create')}}> <button>Crear</button></a>
+    </div>
+    <table border="1" style="background-color: rgb(152, 237, 237); color:black">
         <thead>
-            <tr>
+            <tr style="background-color: aqua">
                 <th>Id</th>
                 <th>Title</th>
                 <th>Content</th>
@@ -31,8 +34,8 @@
                 <td>{{ $item['description'] }}</td>
                 <td>{{ $item['created_at'] }}</td>
                 <td>
-                    <button>View</button>
-                    <button>Edit</button>
+                    <a href={{ route('post.show', $item->id)  }} >View</a>
+                    <a href={{ route('post.edit', $item->id) }}>Edit</a>
                     <button>Delete</button>
                 </td>
             </tr>
