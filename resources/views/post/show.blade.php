@@ -19,6 +19,7 @@
                 <h2>Title: {{ $postOne->title }}</h2>
                 <h3>Content: {{ $postOne->content }}</h3>
                 <p>Description: {{ $postOne->description }}</p>
+                <p>Category: {{ $postOne->category->name }}</p>
                 <p>Created: {{ $postOne->created_at }}</p>
             </div>
         </div>

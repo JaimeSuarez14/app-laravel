@@ -29,6 +29,16 @@
             <label for="" style="color:aliceblue">Content:</label>
             <input type="text" name="content" value="{{  old( 'content', $postOne->content) }}" id="">
         </div>
+        <div>
+            <select name="category_id" id="" style="padding: 5px; width:100%; margin:10px 0;" required>
+                <option value="" disabled >Selecciona una categoria</option>
+                @foreach ($categories as $category)
+                    <option value="{{  old('id', $category->id) }}"
+                        {{ $category->id == $postOne->category_id ? "selected" :"" }}
+                        >{{ $category->name}}</option>
+                @endforeach
+            </select>
+        </div>
         <div style="display: flex; flex-direction: column">
             <label for="" style="color:aliceblue">Description:</label>
             <textarea type="text" name="description"  id="">{{ old('description', $postOne->description) }}</textarea>

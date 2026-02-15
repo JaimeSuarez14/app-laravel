@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -14,8 +15,11 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
     public function index(): View
+
     {
+
         $posts = Post::all();
+        //dd($posts);
         return  view("post.index", compact('posts'));
     }
 
@@ -24,7 +28,9 @@ class PostController extends Controller
      */
     public function create(): View
     {
-       return view('post.create');
+        $categories = Category::all();
+        //dd($categories[1]->posts);
+        return view('post.create', compact('categories'));
     }
 
     /**
@@ -36,6 +42,7 @@ class PostController extends Controller
             'title' => trim($request->title),
             'content' => trim($request->content),
             'description' => trim($request->description),
+            'category_id' => trim($request->category_id),
         ]);
 
         $request->validate([
@@ -49,6 +56,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
         $post->description = $request->description;
+        $post->category_id = $request->category_id;
 
         $post->save();
 
@@ -63,6 +71,8 @@ class PostController extends Controller
     {
         $id = $post->id;
         $postOne = Post::find($id);
+        //dd($postOne->category->name);
+
         return view("post.show", compact('postOne'));
     }
     /**
@@ -72,7 +82,8 @@ class PostController extends Controller
     {
         $id = $post->id;
         $postOne = Post::find($id);
-        return view("post.edit", compact('postOne'));
+        $categories =  Category::all();
+        return view("post.edit", compact('postOne', 'categories'));
     }
 
     /**
@@ -83,8 +94,10 @@ class PostController extends Controller
         $request->validate([
             'title'=> 'required|string|max:30',
             'content'=> 'required|string|max:30',
+            'category_id'=> 'required|string|max:30',
             'description'=> 'required|string|max:255',
         ]);
+        //dd( $request->all());
         $post->update($request->all());
 
         return redirect()->route('post.edit', $post )->with('success', 'Post actualizado correctamente');

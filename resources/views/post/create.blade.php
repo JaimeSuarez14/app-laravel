@@ -22,15 +22,23 @@
 
         <div style="display: flex; flex-direction: column">
             <label for="" style="color:aliceblue">Title:</label>
-            <input type="text" name="title" value="" id="">
+            <input type="text" name="title" value="" id="" required>
         </div>
         <div style="display: flex; flex-direction: column">
             <label for="" style="color:aliceblue">Content:</label>
-            <input type="text" name="content" value="" id="">
+            <input type="text" name="content" value="" id="" required>
+        </div>
+        <div>
+            <select name="category_id" id="" style="padding: 5px; width:100%; margin:10px 0;" required>
+                <option value="" disabled selected>Selecciona una categoria</option>
+                @foreach ($categories as $category)
+                    <option value="{{  old('id', $category->id) }}">{{ $category->name}}</option>
+                @endforeach
+            </select>
         </div>
         <div style="display: flex; flex-direction: column">
             <label for="" style="color:aliceblue">Description:</label>
-            <textarea type="text" name="description"  id=""></textarea>
+            <textarea type="text" name="description"  id="" required></textarea>
         </div>
         <button style="padding: 5px; width: 100%; margin-top: 5px; background-color: green; color:white;" type="submit">Crear</button>
     </form>

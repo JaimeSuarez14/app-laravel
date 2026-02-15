@@ -10,5 +10,10 @@ class Post extends Model
         'title',
         'content',
         'description',
+        'category_id'
     ];
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 }
