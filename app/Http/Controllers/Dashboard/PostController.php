@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class PostController extends Controller
 {
@@ -21,7 +22,7 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
        return view('post.create');
     }
@@ -29,7 +30,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request):RedirectResponse
     {
         $request->merge([
             'title' => trim($request->title),
@@ -58,7 +59,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Post $post): View
     {
         $id = $post->id;
         $postOne = Post::find($id);
@@ -67,7 +68,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Post $post): View
     {
         $id = $post->id;
         $postOne = Post::find($id);
@@ -77,7 +78,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post):RedirectResponse
     {
         $request->validate([
             'title'=> 'required|string|max:30',
@@ -94,6 +95,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //eliminar le post
+        $postDelete = Post::find($post->id);
+        $postDelete->delete();
+        return redirect()->route('post.index')->with('success', 'Post eliminado correctamente');
     }
 }
