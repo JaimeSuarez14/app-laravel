@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FirstController;
 use App\Http\Controllers\Dashboard\PostController;
+use App\Http\Controllers\Dashboard\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,3 +32,4 @@ Route::get('/contact2', function() {
 
 Route::get('contact', [FirstController::class, 'index'])->name('contact');
 Route::resource('post', PostController::class);
+Route::resource('product', ProductController::class);

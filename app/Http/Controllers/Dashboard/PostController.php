@@ -28,7 +28,7 @@ class PostController extends Controller
      */
     public function create(): View
     {
-        $categories = Category::all();
+        $categories = Category::pluck('id', 'name');
         //dd($categories[1]->posts);
         return view('post.create', compact('categories'));
     }
@@ -82,7 +82,12 @@ class PostController extends Controller
     {
         $id = $post->id;
         $postOne = Post::find($id);
-        $categories =  Category::all();
+        $categories =  Category::pluck('id' , 'name');
+        //para usar el category en el select es bueno el pluck
+        //sino tamgien 'select' de esta manera $productos = Producto::select('id', 'nombre')
+        //    ->where('estado', 1)
+        //    ->orderBy('nombre')
+        //    ->get();
         return view("post.edit", compact('postOne', 'categories'));
     }
 

@@ -32,10 +32,10 @@
         <div>
             <select name="category_id" id="" style="padding: 5px; width:100%; margin:10px 0;" required>
                 <option value="" disabled >Selecciona una categoria</option>
-                @foreach ($categories as $category)
-                    <option value="{{  old('id', $category->id) }}"
-                        {{ $category->id == $postOne->category_id ? "selected" :"" }}
-                        >{{ $category->name}}</option>
+                @foreach ($categories as $name => $id)
+                    <option value="{{  old('id', $id) }}"
+                        {{ $id == $postOne->category_id ? "selected" :"" }}
+                        >{{ $name}}</option>
                 @endforeach
             </select>
         </div>
