@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
+use Exception;
+use Illuminate\Validation\Rule;
+
+
 
 class ProductController extends Controller
 {
@@ -15,7 +20,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('dashboard.product.index', compact('products') );
+        return view('dashboard.product.index', compact('products'));
     }
 
     /**
@@ -23,7 +28,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::pluck('name', 'id');//el orden es importante valor - clave
+        $categories = Category::pluck('name', 'id'); //el orden es importante valor - clave
         return view('dashboard.product.create', compact('categories'));
     }
 
@@ -32,22 +37,38 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge([
-            'name' => trim($request->name),
-            'description' => trim($request->description),
-            'category_id' => trim($request->category_id),
-        ]);
+        try {
 
-        $request->validate([
-            'name'=> 'required|string|unique:products|max:30',
-            'price' => 'required|min:1',
-            'category_id'=> 'required|string|max:30',
-            'description'=> 'required|string|max:255',
-        ]);
+            // Limpiar solo textos
+            $request->merge([
+                'name' => trim($request->name),
+                'description' => trim($request->description),
+            ]);
 
-        Product::create($request->all());
+            // Validación
+            $validated = $request->validate([
+                'name'        => 'required|string|max:30|unique:products,name',
+                'price'       => 'required|numeric|min:1',
+                'category_id' => 'required|integer|exists:categories,id',
+                'description' => 'required|string|max:255',
+            ]);
 
-        return redirect()->route('product.create')->with('success', 'Product creado correctamente');
+            // Guardar
+            $product = Product::create($validated);
+
+            return to_route('product.create')
+                ->with('success', 'Producto creado correctamente');
+        } catch (QueryException $e) {
+
+            return back()
+                ->withInput()
+                ->with('error', 'Error en la base de datos: ' . $e->getMessage());
+        } catch (Exception $e) {
+
+            return back()
+                ->withInput()
+                ->with('error', 'Ocurrió un error inesperado');
+        }
     }
 
     /**
@@ -63,7 +84,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories = Category::pluck( 'name' , 'id' );
+        $categories = Category::pluck('name', 'id');
         return view('dashboard.product.edit', compact('product', 'categories'));
     }
 
@@ -72,22 +93,29 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        // Limpiar solo textos
         $request->merge([
             'name' => trim($request->name),
             'description' => trim($request->description),
-            'category_id' => trim($request->category_id),
         ]);
 
-        $request->validate([
-            'name'=> 'required|string|unique:products|max:30',
-            'price' => 'required|min:1',
-            'category_id'=> 'required|string|max:30',
-            'description'=> 'required|string|max:255',
+        // Validación
+        $validated = $request->validate([
+            'name' => [
+                'required',
+                'string',
+                'max:30',
+                Rule::unique('products', 'name')->ignore($product->id),
+            ],
+            'price'       => 'required|numeric|min:1',
+            'category_id' => 'required|integer|exists:categories,id',
+            'description' => 'required|string|max:255',
         ]);
 
-        $product->update( $request->all() );
+        $product->update($validated);
 
-        return to_route('product.edit', compact('product') )->with('success', 'Product actualizado correctamente');
+        return to_route('product.edit', $product)
+            ->with('success', 'Producto actualizado correctamente');
     }
 
     /**

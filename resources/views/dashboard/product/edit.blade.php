@@ -23,7 +23,7 @@
 
         <div style="display: flex; flex-direction: column">
             <label for="" style="color:aliceblue">Name:</label>
-            <input type="text" name="name" value="{{ old('title', $product->name) }}" id="">
+            <input type="text" name="name" value="{{ old('name', $product->name) }}" id="">
         </div>
         <div style="display: flex; flex-direction: column">
             <label for="" style="color:aliceblue">Price:</label>

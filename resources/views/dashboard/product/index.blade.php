@@ -3,7 +3,7 @@
 @section('content')
 
 <main style="height: 100vh; background-color: rgb(4, 4, 57); display: flex; flex-direction: column; justify-content: center; align-items: center; color:white;">
-    <div style="padding: 25px; background-color: rgb(0, 0, 0); border-radius: 10px; width:fit-content">
+    <div style="padding: 25px; background-color: rgb(0, 0, 0); border-radius: 10px; width:650px;">
     <h1 style="">Lista de Productos Registrados</h1>
      @if(session('success'))
         <div style="color:white; padding: 2px; background-color: green; border-radius: 5px; margin: 5px 0">{{ session('success') }}</div>
