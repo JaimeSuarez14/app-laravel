@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::pluck('id','name');
+        $categories = Category::pluck('name', 'id');//el orden es importante valor - clave
         return view('dashboard.product.create', compact('categories'));
     }
 
@@ -63,7 +63,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories = Category::pluck('name', 'id');
+        $categories = Category::pluck( 'name' , 'id' );
         return view('dashboard.product.edit', compact('product', 'categories'));
     }
 
@@ -72,7 +72,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request->merge([
+            'name' => trim($request->name),
+            'description' => trim($request->description),
+            'category_id' => trim($request->category_id),
+        ]);
+
+        $request->validate([
+            'name'=> 'required|string|unique:products|max:30',
+            'price' => 'required|min:1',
+            'category_id'=> 'required|string|max:30',
+            'description'=> 'required|string|max:255',
+        ]);
+
+        $product->update( $request->all() );
+
+        return to_route('product.edit', compact('product') )->with('success', 'Product actualizado correctamente');
     }
 
     /**

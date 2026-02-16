@@ -25,7 +25,7 @@
         <div>
             <select name="category_id" id="" style="padding: 5px; width:100%; margin:10px 0;" required>
                 <option value="" disabled selected>Selecciona una categoria</option>
-                @foreach ($categories as $name => $id)
+                @foreach ($categories as $id => $name)
                     <option value="{{  old('id', $id) }}">{{ $name}}</option>
                 @endforeach
             </select>

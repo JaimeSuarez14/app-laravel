@@ -16,7 +16,7 @@
         <div style="color:white; padding: 2px; background-color: green; border-radius: 5px; margin: 5px 0">{{ session('success') }}</div>
     @endif
 
-    <form action="{{ route('post.update', $product->id ) }}" method="POST" style="padding:20px 0">
+    <form action="{{ route('product.update', $product->id ) }}" method="POST" style="padding:20px 0">
         @csrf
         @method('PUT')
         <input type="hidden" name="id" value={{ old('id', $product->id) }} id="">
@@ -32,7 +32,7 @@
         <div>
             <select name="category_id" id="" style="padding: 5px; width:100%; margin:10px 0;" required>
                 <option value="" disabled >Selecciona una categoria</option>
-                @foreach ($categories as $name => $id)
+                @foreach ($categories as $id => $name)
                     <option value="{{  old('id', $id) }}"
                         {{ $id == $product->category_id ? "selected" :"" }}
                         >{{ $name}}</option>
