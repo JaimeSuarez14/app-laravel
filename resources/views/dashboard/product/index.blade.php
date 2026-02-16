@@ -29,9 +29,9 @@
                 <td>{{ $item['name'] }}</td>
                 <td>{{ $item['description'] }}</td>
                 <td>
-                    <a href={{ route('post.show', $item->id)  }}><button>View</button></a>
-                    <a href={{ route('post.edit', $item->id) }}><button>Edit</button></a>
-                    <form action="{{ route('post.destroy', $item->id) }}" method="POST">
+                    <a href={{ route('product.show', $item->id)  }}><button>View</button></a>
+                    <a href={{ route('product.edit', $item->id) }}><button>Edit</button></a>
+                    <form action="{{ route('product.destroy', $item->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button>Delete</button>

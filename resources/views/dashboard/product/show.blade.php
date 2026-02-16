@@ -3,19 +3,19 @@
 
 
     <main style="height: 100vh; background-color: rgb(4, 4, 57); display: flex; flex-direction: column; justify-content: center; align-items: center">
-        <div style="padding: 25px; background-color: rgb(0, 0, 0); border-radius: 10px">
+        <div style="padding: 25px; background-color: rgb(0, 0, 0); border-radius: 10px; width:350px">
             <h1 style="color:white">Detalle del Producto</h1>
             <div style="margin: 10px 0;">
                 <a href={{ route('product.index') }} style="color:white">Regresar</a>
-            <a href={{ route('post.edit', $postOne->id) }} style="color:white" >Edit</a>
+            <a href={{ route('product.edit', $product->id) }} style="color:white" >Editar</a>
             </div>
             <div style="background-color: aliceblue; padding: 10px">
-                <h2>Id: {{ $postOne->id }}</h2>
-                <h2>Title: {{ $postOne->title }}</h2>
-                <h3>Content: {{ $postOne->content }}</h3>
-                <p>Description: {{ $postOne->description }}</p>
-                <p>Category: {{ $postOne->category->name }}</p>
-                <p>Created: {{ $postOne->created_at }}</p>
+                <h2>Id: {{ $product->id }}</h2>
+                <h2>Name: {{ $product->name }}</h2>
+                <h3>Price: {{ $product->price }}</h3>
+                <p>Description: {{ $product->description }}</p>
+                <p>Category: {{ $product->category->name }}</p>
+                <p>Created: {{ $product->created_at }}</p>
             </div>
         </div>
     </main>
