@@ -63,7 +63,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = Category::pluck('name', 'id');
+        return view('dashboard.product.edit', compact('product', 'categories'));
     }
 
     /**
