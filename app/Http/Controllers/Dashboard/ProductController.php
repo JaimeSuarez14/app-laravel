@@ -45,12 +45,7 @@ class ProductController extends Controller
             'description'=> 'required|string|max:255',
         ]);
 
-        Product::create([
-            'name' => $request->name,
-            'price' => $request->price,
-            'category_id' => $request->category_id,
-            'description' => $request->description,
-        ]);
+        Product::create($request->all());
 
         return redirect()->route('product.create')->with('success', 'Product creado correctamente');
     }
