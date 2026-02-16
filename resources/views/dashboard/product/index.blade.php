@@ -1,17 +1,17 @@
-@extends('layout')
+@extends('dashboard.layout')
 
 @section('content')
 
 <main style="height: 100vh; background-color: rgb(4, 4, 57); display: flex; flex-direction: column; justify-content: center; align-items: center; color:white;">
-    <div style="padding: 25px; background-color: rgb(0, 0, 0); border-radius: 10px">
+    <div style="padding: 25px; background-color: rgb(0, 0, 0); border-radius: 10px; width:fit-content">
     <h1 style="">Lista de Productos Registrados</h1>
      @if(session('success'))
         <div style="color:white; padding: 2px; background-color: green; border-radius: 5px; margin: 5px 0">{{ session('success') }}</div>
     @endif
     <div style="padding-bottom: 15px;">
-        <span>Crear un nuevo Producto </span> <a href={{ route('post.create')}}> <button>Crear</button></a>
+        <span>Crear un nuevo Producto </span> <a href={{ route('product.create')}}> <button>Crear</button></a>
     </div>
-    <table border="1" style="background-color: rgb(152, 237, 237); color:black">
+    <table border="1" style="background-color: rgb(152, 237, 237); color:black; width:100%">
         <thead>
             <tr style="background-color: aqua">
                 <th>Id</th>
@@ -22,8 +22,8 @@
             </tr>
         </thead>
         <tbody>
-            @if (len($products) > 0)
-                @foreach ($posts as $item)
+            @if ($products->count() > 0)
+                @foreach ($products as $item)
             <tr>
                 <td>{{ $item->id }}</td>
                 <td>{{ $item['name'] }}</td>
@@ -43,7 +43,7 @@
 
             @else
                 <tr>
-                    <td colspan="4">No hay productos registrados</td>
+                    <td style="text-align: center; padding: 10px 0;" colspan="4">No hay productos registrados</td>
                 </tr>
             @endif
         </tbody>

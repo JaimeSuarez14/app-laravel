@@ -32,7 +32,27 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge([
+            'name' => trim($request->name),
+            'description' => trim($request->description),
+            'category_id' => trim($request->category_id),
+        ]);
+
+        $request->validate([
+            'name'=> 'required|string|unique:products|max:30',
+            'price' => 'required|min:1',
+            'category_id'=> 'required|string|max:30',
+            'description'=> 'required|string|max:255',
+        ]);
+
+        Product::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'category_id' => $request->category_id,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('product.create')->with('success', 'Product creado correctamente');
     }
 
     /**
