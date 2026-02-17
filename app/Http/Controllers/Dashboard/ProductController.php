@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\StoreRequest;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -35,26 +36,26 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         try {
 
             // Limpiar solo textos
-            $request->merge([
+            /*$request->merge([
                 'name' => trim($request->name),
                 'description' => trim($request->description),
-            ]);
+            ]);*/
 
             // Validación
-            $validated = $request->validate([
+           /* $validated = $request->validate([
                 'name'        => 'required|string|max:30|unique:products,name',
                 'price'       => 'required|numeric|min:1',
                 'category_id' => 'required|integer|exists:categories,id',
                 'description' => 'required|string|max:255',
-            ]);
+            ]);*/
 
             // Guardar
-            $product = Product::create($validated);
+            $product = Product::create($request->validated());
 
             return to_route('product.create')
                 ->with('success', 'Producto creado correctamente');
