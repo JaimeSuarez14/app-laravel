@@ -15,15 +15,8 @@
         {{ session('error') }}
     </div>
 @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul style="color:red;">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+
+    @include('dashboard.fragment.errors_form')
 
     <form action="{{ route('product.store') }}" method="POST" style="padding:20px 0">
         @csrf
@@ -39,9 +32,9 @@
         </div>
         <div>
             <select name="category_id" id="" style="padding: 5px; width:100%; margin:10px 0;" required >
-                <option  value="" disabled {{ old('category_id') ? '' : 'selected' }} >Selecciona una categoria</option>
+                <option  value="" disabled {{old('category_id') ? '' : 'selected'}} >Selecciona una categoria</option>
                 @foreach ($categories as $id => $name)
-                    <option value="{{ $id) }}" {{old('category_id')== $id ? 'selected' : ""}} >{{ $name}}</option>
+                    <option value="{{ $id }}" {{old('category_id')== $id ? 'selected' : ""}} >{{ $name}}</option>
                 @endforeach
             </select>
         </div>

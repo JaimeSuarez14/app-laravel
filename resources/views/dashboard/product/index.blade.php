@@ -49,6 +49,7 @@
         </tbody>
 
     </table>
+    <div style="width:150px; height:25px;">{{ $products->links() }}</div>
     </div>
     </main>
 
