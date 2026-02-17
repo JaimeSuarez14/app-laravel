@@ -41,7 +41,7 @@
             <select name="category_id" id="" style="padding: 5px; width:100%; margin:10px 0;" required >
                 <option  value="" disabled {{ old('category_id') ? '' : 'selected' }} >Selecciona una categoria</option>
                 @foreach ($categories as $id => $name)
-                    <option value="{{ $id) }}" {{old()}}>{{ $name}}</option>
+                    <option value="{{ $id) }}" {{old('category_id')== $id ? 'selected' : ""}} >{{ $name}}</option>
                 @endforeach
             </select>
         </div>
